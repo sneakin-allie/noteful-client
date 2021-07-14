@@ -41,7 +41,7 @@ export default class AddNote extends Component {
       this.setState({
         errorMessage: ""
       })
-      fetch(`${config.API_ENDPOINT}/notes`, {
+      fetch(`${config.API_BASE_URL}/notes`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'

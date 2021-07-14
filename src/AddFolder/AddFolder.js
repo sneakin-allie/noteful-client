@@ -32,7 +32,7 @@ export default class AddFolder extends Component {
     })
   } else {
     
-    fetch(`${config.API_ENDPOINT}/folders`, {
+    fetch(`${config.API_BASE_URL}/folders`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
