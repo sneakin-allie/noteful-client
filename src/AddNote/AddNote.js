@@ -28,6 +28,7 @@ export default class AddNote extends Component {
       folder_id: e.target['note-folder-id'].value,
       modified: new Date(),
     }
+    console.log("newNote:", newNote)
 
     if (newNote.name === "") {
       this.setState({
@@ -90,7 +91,7 @@ export default class AddNote extends Component {
             </label>
             <select id='note-folder-select' name='note-folder-id'>
               {folders.map(folder =>
-                <option key={folder.id} value={folder.id}>
+                <option key={folder.folder_id} value={folder.folder_id}>
                   {folder.folder_name}
                 </option>
               )}

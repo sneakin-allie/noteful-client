@@ -1,21 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './Note.css';
 
 export default class Note extends React.Component {
     static defaultProps = {
-        onDeleteNote: () => {},
+        deleteNote: () => {},
     }
     static contextType = ApiContext;
 
     handleClickDelete = e => {
         e.preventDefault()
-        const note_id = this.props.id
-
-        console.log('noteId:', note_id)
+        const note_id = this.props.note_id
+        console.log("note_id:", note_id)
 
         fetch(`${config.API_BASE_URL}/notes/${note_id}`, {
             method: 'DELETE',
@@ -25,11 +23,11 @@ export default class Note extends React.Component {
         })
         .then(res => {
             if (!res.ok)
-                return res.json().then(e => Promise.reject(e))
-            return res.json()
+                throw new Error(res.status)
+            return res
         })
         .then(() => {
-            this.context.deleteNote(note_id)  
+            this.context.deleteNote(note_id)
         })
         .catch(error => {
             console.error({error})
@@ -38,7 +36,6 @@ export default class Note extends React.Component {
 
     render() {
         const { name, note_id, modified } = this.props
-        console.log('this.props:', this.props)
         
         return (
             <div className="Note">
@@ -64,10 +61,4 @@ export default class Note extends React.Component {
             </div>
         )
     }  
-}
-
-Note.propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    modified: PropTypes.string.isRequired
 }
