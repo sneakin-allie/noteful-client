@@ -25,6 +25,7 @@ export default class AddFolder extends Component {
     const folder = {
       folder_name: e.target['folder-name'].value
     }
+    console.log("folder:", folder)
 
   if (folder.folder_name === "") {
     this.setState({
@@ -40,8 +41,9 @@ export default class AddFolder extends Component {
       body: JSON.stringify(folder),
     })
       .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
+        if (!res.ok) {
+          throw new Error(res.status)
+        }
         return res.json()
       })
       .then(folder => {
